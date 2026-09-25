@@ -1,0 +1,46 @@
+[settings]
+lockfile_mode = "generate"
+lockfile = true
+experimental = true
+
+[env]
+MSB_CONFIG_PATH = "$HOME/.config/microsandbox/config.json"
+
+[vars]
+tag = "localhost:5000/msb-sandbox:v0.0.1"
+oci_dir = "mise-oci"
+
+[oci]
+from = "registry.fedoraproject.org/fedora-minimal:44"
+tag = "{{ vars.tag }}"
+user = "1000:1000"
+user_id = 1000
+workdir = "/workspace"
+
+[tools]
+eza = "latest"
+fd = "latest"
+jq = "latest"
+just = "latest"
+ripgrep = "latest"
+shellcheck = "latest"
+tmux = "latest"
+yq = "latest"
+
+"github:Kilo-Org/kilocode" = "7.7"
+"github:fish-shell/fish-shell" = "4.9"
+
+[tools."github:superradcompany/microsandbox"]
+version = "0.7"
+
+[tasks.build]
+run = "mise oci build"
+
+[tasks.load]
+run = "podman image load --input={{ vars.oci_dir }}/"
+
+[tasks.run]
+run = "mise oci run --image-dir {{ vars.oci_dir }}/ -it -- {{ tools.fish.bin }}"
+
+[tasks.push]
+run = "mise oci push --image-dir {{ vars.oci_dir }}/ {{ vars.tag }}"

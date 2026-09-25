@@ -1,0 +1,4 @@
+image: "localhost:5000/msb-sandbox:v0.0.1"
+pull_policy: always
+shell: /bin/fish
+hostname: msb-sandbox

@@ -7,15 +7,15 @@ experimental = true
 MSB_CONFIG_PATH = "$HOME/.config/microsandbox/config.json"
 
 [vars]
-tag = "localhost:5000/msb-sandbox:v0.0.1"
+tag_base = "localhost:5000/sandbox-base:v0.0.1"
+tag = "localhost:5000/sandbox:v0.0.1"
 oci_dir = "mise-oci"
 
 [oci]
-from = "registry.fedoraproject.org/fedora-minimal:44"
+from = "localhost:5000/sandbox-base:v0.0.1"
 tag = "{{ vars.tag }}"
 user = "1000:1000"
 user_id = 1000
-workdir = "/workspace"
 
 [tools]
 eza = "latest"
@@ -28,10 +28,17 @@ tmux = "latest"
 yq = "latest"
 
 "github:Kilo-Org/kilocode" = "7.7"
-"github:fish-shell/fish-shell" = "4.9"
 
 [tools."github:superradcompany/microsandbox"]
 version = "0.7"
+
+[tasks.build-base]
+run = "podman build -f ./base/Containerfile -t {{ vars.tag_base }} "
+sources = ["base/Containerfile"]
+
+[tasks.build-push-base]
+depends = ["build-base"]
+run = "podman push {{ vars.tag_base }}"
 
 [tasks.build]
 run = "mise oci build"

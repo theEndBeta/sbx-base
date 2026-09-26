@@ -1,0 +1,6 @@
+FROM registry.fedoraproject.org/fedora-minimal:44
+
+RUN --mount=type=cache,target=/var/cache/libdnf5 \
+  dnf install -y fish
+
+RUN useradd --create-home --shell /bin/fish --uid 1000 --user-group sbx

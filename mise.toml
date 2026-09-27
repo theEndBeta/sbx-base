@@ -26,6 +26,9 @@ ripgrep = "latest"
 shellcheck = "latest"
 tmux = "latest"
 yq = "latest"
+github-cli = "latest"
+glab = "latest"
+ghalint = "latest"
 
 "github:Kilo-Org/kilocode" = "7.7"
 

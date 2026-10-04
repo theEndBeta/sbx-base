@@ -3,13 +3,11 @@ lockfile_mode = "generate"
 lockfile = true
 experimental = true
 
-[env]
-MSB_CONFIG_PATH = "$HOME/.config/microsandbox/config.json"
-
 [vars]
 tag_base = "localhost:5000/sandbox-base:v0.0.1"
 tag = "localhost:5000/sandbox:v0.0.1"
 oci_dir = "mise-oci"
+sbx_name = "sbx-sandbox"
 
 [oci]
 from = "localhost:5000/sandbox-base:v0.0.1"
@@ -29,28 +27,53 @@ yq = "latest"
 github-cli = "latest"
 glab = "latest"
 ghalint = "latest"
+neovim = "latest"
 
-"github:Kilo-Org/kilocode" = "7.7"
+"github:Kilo-Org/kilocode" = "7.8"
 
 [tools."github:superradcompany/microsandbox"]
 version = "0.7"
 
-[tasks.build-base]
-run = "podman build -f ./base/Containerfile -t {{ vars.tag_base }} "
+[tasks.base-build]
+description = "Build the base image for the sandbox - {{ vars.tag_base }}"
+run = "podman build -f ./base/Containerfile -t {{ vars.tag_base }}"
 sources = ["base/Containerfile"]
 
-[tasks.build-push-base]
+[tasks.base-push]
+description = "Push the base image for the sandbox - {{ vars.tag_base }}"
 depends = ["build-base"]
 run = "podman push {{ vars.tag_base }}"
 
-[tasks.build]
+[tasks.sbx-build]
+description = "Build the tooled sandbox image - {{ vars.tag }}"
+outputs = ["{{ vars.oci_dir }}"]
 run = "mise oci build"
 
-[tasks.load]
+[tasks.sbx-load]
+description = "Load the tooled sandbox image into podman - {{ vars.tag }}"
+depends = ["sbx-build"]
 run = "podman image load --input={{ vars.oci_dir }}/"
 
-[tasks.run]
-run = "mise oci run --image-dir {{ vars.oci_dir }}/ -it -- {{ tools.fish.bin }}"
+[tasks.sbx-run]
+description = "Run the tooled sandbox image directly - {{ vars.tag }}"
+depends = ["sbx-build"]
+run = "mise oci run --image-dir {{ vars.oci_dir }}/ -it -- /bin/fish"
 
-[tasks.push]
+[tasks.sbx-push]
+description = "Push the tooled sandbox image - {{ vars.tag_base }}"
+depends = ["sbx-build"]
 run = "mise oci push --image-dir {{ vars.oci_dir }}/ {{ vars.tag }}"
+
+[tasks.msb-run]
+description = "Run the sandbox as microvm - {{ vars.sbx_name }}"
+env = { "MSB_CONFIG_PATH" = "$HOME/.config/microsandbox/config.json" }
+run = "msb run --conf=sandbox.yml --name {{ vars.sbx_name }}"
+
+[tasks.msb-start]
+description = "Run the sandbox microvm (if exists) - {{ vars.sbx_name }}"
+run = "msb start {{ vars.sbx_name }}"
+
+[tasks.msb-rm]
+description = "Remove the sandbox microvm (if exists) - {{ vars.sbx_name }}"
+env = { "MSB_CONFIG_PATH" = "$HOME/.config/microsandbox/config.json" }
+run = "msb rm {{ vars.sbx_name }}"

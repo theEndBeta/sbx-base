@@ -1,6 +1,12 @@
 FROM registry.fedoraproject.org/fedora-minimal:44
 
 RUN --mount=type=cache,target=/var/cache/libdnf5 \
-  dnf install -y fish
+  dnf install -y fish git
 
 RUN useradd --create-home --shell /bin/fish --uid 1000 --user-group sbx
+
+RUN --mount=type=cache,target=/var/cache/libdnf5 \
+  dnf install -y procps-ng iproute
+
+ENTRYPOINT []
+CMD ["/bin/fish"]

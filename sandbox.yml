@@ -1,9 +1,29 @@
 image: "localhost:5000/sandbox:v0.0.1"
+pull_policy: always
 cpus: 4
 memory: "4G"
-pull_policy: always
-shell: /bin/fish
-hostname: msb-sandbox
+
+hostname: "sbx-base"
 workdir: "/workspace"
+user: "sbx"
+shell: "/bin/fish"
+cmd: ["/bin/fish"]
+
+network:
+  policy: public
+  deny: ["[::/0]"]
+  dns:
+    rebind_protection: true
+
 mounts:
-  - "./:/workspace/app"
+  - bind: "./"
+    target: "/workspace/app"
+  - named: "sbx-config"
+    target: "/home/sbx/.config"
+    create: ensure-exists
+  - bind: "${HOME}/.config/nvim"
+    target: "/home/sbx/.config/nvim"
+    readonly: true
+  - bind: "${HOME}/.config/tmux"
+    target: "/home/sbx/.config/tmux"
+    readonly: true

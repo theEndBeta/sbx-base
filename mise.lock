@@ -269,7 +269,7 @@ url_api = "https://api.github.com/repos/superradcompany/microsandbox/releases/as
 provenance = "github-attestations"
 
 [[tools.glab]]
-version = "1.120.0"
+version = "1.123.0"
 backend = "gitlab:gitlab-org/cli"
 specifiers = ["latest"]
 

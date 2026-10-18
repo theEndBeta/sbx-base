@@ -1,0 +1,42 @@
+# AGENTS.md
+
+This repo builds the `sbx` sandbox images (base + tooled). No app code, tests, lint, or CI workflows.
+
+## Run from repo root
+
+All `mise` / `podman` / `msb` commands must run from `/workspace/app` (where `mise.toml` and `sandbox.yml` live).
+
+## Build order (registry required)
+
+`localhost:5000` must be reachable — `base` is `FROM`/`push`ed there and `sbx` builds `FROM` it.
+
+```sh
+mise run base-build   # podman build base/Containerfile -> localhost:5000/sandbox-base:v0.0.1
+mise run base-push    # depends: base-build
+mise run sbx-build    # mise oci build -> ./mise-oci/ (generated)
+mise run sbx-push     # depends: sbx-build; push localhost:5000/sandbox:v0.0.1
+mise run full-build   # base-push + sbx-push (full rebuild)
+mise run sbx-load     # load mise-oci/ into podman
+mise run sbx-run      # shell into tooled image via /bin/fish
+mise run msb-run      # run microvm per sandbox.yml (needs MSB_CONFIG_PATH, set in task env)
+mise run msb-start    # start existing microvm (no MSB_CONFIG_PATH in task — export it manually)
+mise run msb-rm       # remove microvm (needs MSB_CONFIG_PATH, set in task env)
+```
+
+Tags/vars live in `mise.toml` `[vars]` (`tag_base`, `tag`, `oci_dir`, `sbx_name`). `mise.toml` uses `experimental = true` and `lockfile_mode = "generate"` — keep both.
+
+## Files
+
+- `base/Containerfile`: `FROM registry.fedoraproject.org/fedora-minimal:44`; installs `fish git procps-ng iproute`; user `sbx` (uid 1000, shell fish); `ENTRYPOINT []`, `CMD ["/bin/fish"]`. Uses BuildKit `--mount=type=cache,target=/var/cache/libdnf5`.
+- `sandbox.yml`: microvm 4 CPU / 4G, `user: sbx`, `workdir: /workspace`, shell fish. Network is `public` with `deny: ["[::/0]"]` + `rebind_protection: true` (IPv6 egress workaround — keep). Mounts: repo root -> `/workspace/app`; named `sbx-config` -> `/home/sbx/.config`; host nvim/tmux configs bind-mounted readonly.
+- `mise-oci/`: `mise oci build` output directory. Gitignored (`mise-oci/`) — never edit or commit.
+- `mise.lock`: committed. Updated by Renovate (`lockFileMaintenance` Mondays before 4am), not by hand.
+
+## Git: sync before push
+
+Before pushing new changes: `git fetch origin && git rebase origin/main`, then `git push --force-with-lease` if rebased.
+
+## Deps
+
+- `mise.toml` `[tools]`: mostly `latest`; pinned: `github:Kilo-Org/kilocode = "7.8"`, `microsandbox = "0.7"`.
+- Dependabot (weekly): `docker` in `/base`, `github-actions` in `/`. Renovate groups `mise` / `dockerfile` / `github-actions`; fuzzy `latest` pins update `mise.lock` only, concrete pins also update `mise.toml` — match that when changing pins.

@@ -21,6 +21,8 @@ mounts:
   - named: "sbx-config"
     target: "/home/sbx/.config"
     create: ensure-exists
+    uid: 1000
+    gid: 1000
   - bind: "${HOME}/.config/nvim"
     target: "/home/sbx/.config/nvim"
     readonly: true

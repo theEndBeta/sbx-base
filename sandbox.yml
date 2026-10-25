@@ -29,3 +29,6 @@ mounts:
   - bind: "${HOME}/.config/tmux"
     target: "/home/sbx/.config/tmux"
     readonly: true
+  - bind: "${HOME}/.ssh/kilo-sbx"
+    target: "/home/sbx/.ssh"
+    readonly: true

@@ -79,6 +79,11 @@ description = "Remove the sandbox microvm (if exists) - {{ vars.sbx_name }}"
 env = { "MSB_CONFIG_PATH" = "$HOME/.config/microsandbox/config.json" }
 run = "msb rm {{ vars.sbx_name }}"
 
+[tasks.msb-stop]
+description = "Remove the sandbox microvm (if exists) - {{ vars.sbx_name }}"
+env = { "MSB_CONFIG_PATH" = "$HOME/.config/microsandbox/config.json" }
+run = "msb stop {{ vars.sbx_name }}"
+
 [tasks.full-build]
 description = "Full build of base through tooled sandbox"
 depends = "base-push"

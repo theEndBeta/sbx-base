@@ -32,3 +32,10 @@ mounts:
   - bind: "${HOME}/.ssh/kilo-sbx"
     target: "/home/sbx/.ssh"
     readonly: true
+
+  # repo/instance specific
+  - named: "sbx-kilo-data"
+    target: "/home/sbx/.local/share/kilo"
+    create: ensure-exists
+    uid: 1000
+    gid: 1000

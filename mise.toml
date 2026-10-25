@@ -41,13 +41,14 @@ sources = ["base/Containerfile"]
 
 [tasks.base-push]
 description = "Push the base image for the sandbox - {{ vars.tag_base }}"
-depends = ["build-base"]
+depends = ["base-build"]
 run = "podman push {{ vars.tag_base }}"
 
 [tasks.sbx-build]
 description = "Build the tooled sandbox image - {{ vars.tag }}"
 outputs = ["{{ vars.oci_dir }}"]
 run = "mise oci build"
+wait_for = ["base-build", "base-push"]
 
 [tasks.sbx-load]
 description = "Load the tooled sandbox image into podman - {{ vars.tag }}"
@@ -77,3 +78,8 @@ run = "msb start {{ vars.sbx_name }}"
 description = "Remove the sandbox microvm (if exists) - {{ vars.sbx_name }}"
 env = { "MSB_CONFIG_PATH" = "$HOME/.config/microsandbox/config.json" }
 run = "msb rm {{ vars.sbx_name }}"
+
+[tasks.full-build]
+description = "Full build of base through tooled sandbox"
+depends = "base-push"
+depends_post = "sbx-push"

@@ -68,7 +68,7 @@ url = "https://github.com/sharkdp/fd/releases/download/v10.5.0/fd-v10.5.0-x86_64
 url_api = "https://api.github.com/repos/sharkdp/fd/releases/assets/530482901"
 
 [[tools.ghalint]]
-version = "1.5.6"
+version = "1.5.7"
 backend = "aqua:suzuki-shunsuke/ghalint"
 specifiers = ["latest"]
 

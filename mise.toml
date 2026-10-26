@@ -26,7 +26,6 @@ tmux = "latest"
 yq = "latest"
 github-cli = "latest"
 glab = "latest"
-ghalint = "latest"
 neovim = "latest"
 
 "github:Kilo-Org/kilocode" = "7.8"

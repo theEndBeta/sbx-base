@@ -2,5 +2,32 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
+  ],
+  "dependencyDashboard": true,
+  "labels": ["dependencies"],
+  "lockFileMaintenance": {
+    "enabled": false
+  },
+  "packageRules": [
+    {
+      "description": "mise owns mise.lock; Renovate must only update mise.toml",
+      "matchManagers": ["mise"],
+      "skipArtifactsUpdate": true,
+      "groupName": "mise tools"
+    },
+    {
+      "description": "mise tools: concrete pins update mise.toml",
+      "matchManagers": ["mise"],
+      "matchCurrentVersion": "/^\\d/",
+      "groupName": "mise tools (pinned)"
+    },
+    {
+      "matchManagers": ["dockerfile"],
+      "groupName": "docker"
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "groupName": "github-actions"
+    }
   ]
 }

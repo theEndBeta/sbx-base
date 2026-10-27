@@ -67,7 +67,15 @@ run = "mise oci push --image-dir {{ vars.oci_dir }}/ {{ vars.tag }}"
 [tasks.msb-run]
 description = "Run the sandbox as microvm - {{ vars.sbx_name }}"
 env = { "MSB_CONFIG_PATH" = "$HOME/.config/microsandbox/config.json" }
-run = "msb run --conf=sandbox.yml --name {{ vars.sbx_name }}"
+usage = '''
+flag "--replace" help="Force recreate sandbox"
+'''
+run = '''
+msb run \
+  --conf=sandbox.yml \
+  {{ "--replace" if usage.replace else "" }} \
+  --name {{ vars.sbx_name }}
+'''
 
 [tasks.msb-start]
 description = "Run the sandbox microvm (if exists) - {{ vars.sbx_name }}"

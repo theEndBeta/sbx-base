@@ -215,44 +215,44 @@ url_api = "https://api.github.com/repos/superradcompany/microsandbox/releases/as
 provenance = "github-attestations"
 
 [[tools.glab]]
-version = "1.124.0"
+version = "1.126.0"
 backend = "gitlab:gitlab-org/cli"
 specifiers = ["latest"]
 
 [tools.glab."platforms.linux-arm64"]
-checksum = "sha256:0716395a0efeb991fc844b33fe55310645afcbd9b9746e50c725e9d1cd1b8d16"
-url = "https://gitlab.com/gitlab-org/cli/-/releases/v1.124.0/downloads/glab_1.124.0_linux_arm64.tar.gz"
-url_api = "https://gitlab.com/api/v4/projects/gitlab-org%2Fcli/packages/generic/glab/1%2E124%2E0/glab_1%2E124%2E0_linux_arm64%2Etar%2Egz"
+checksum = "sha256:de5e92c9c8b306eeebb19daa854d48101b78328850e7b9cd677ecd6f98cd4391"
+url = "https://gitlab.com/gitlab-org/cli/-/releases/v1.126.0/downloads/glab_1.126.0_linux_arm64.tar.gz"
+url_api = "https://gitlab.com/api/v4/projects/gitlab-org%2Fcli/packages/generic/glab/1%2E126%2E0/glab_1%2E126%2E0_linux_arm64%2Etar%2Egz"
 
 [tools.glab."platforms.linux-arm64-musl"]
-checksum = "sha256:0716395a0efeb991fc844b33fe55310645afcbd9b9746e50c725e9d1cd1b8d16"
-url = "https://gitlab.com/gitlab-org/cli/-/releases/v1.124.0/downloads/glab_1.124.0_linux_arm64.tar.gz"
-url_api = "https://gitlab.com/api/v4/projects/gitlab-org%2Fcli/packages/generic/glab/1%2E124%2E0/glab_1%2E124%2E0_linux_arm64%2Etar%2Egz"
+checksum = "sha256:de5e92c9c8b306eeebb19daa854d48101b78328850e7b9cd677ecd6f98cd4391"
+url = "https://gitlab.com/gitlab-org/cli/-/releases/v1.126.0/downloads/glab_1.126.0_linux_arm64.tar.gz"
+url_api = "https://gitlab.com/api/v4/projects/gitlab-org%2Fcli/packages/generic/glab/1%2E126%2E0/glab_1%2E126%2E0_linux_arm64%2Etar%2Egz"
 
 [tools.glab."platforms.linux-x64"]
-checksum = "sha256:63df684842b0697e418649dd64374d37ac1da0fbcdcb422d6a5557222f8bb40f"
-url = "https://gitlab.com/gitlab-org/cli/-/releases/v1.124.0/downloads/glab_1.124.0_linux_amd64.tar.gz"
-url_api = "https://gitlab.com/api/v4/projects/gitlab-org%2Fcli/packages/generic/glab/1%2E124%2E0/glab_1%2E124%2E0_linux_amd64%2Etar%2Egz"
+checksum = "sha256:f386519ba83e9482979992ee7f60eeebee4d95b950f95f4fe7289e0a1b1ea74c"
+url = "https://gitlab.com/gitlab-org/cli/-/releases/v1.126.0/downloads/glab_1.126.0_linux_amd64.tar.gz"
+url_api = "https://gitlab.com/api/v4/projects/gitlab-org%2Fcli/packages/generic/glab/1%2E126%2E0/glab_1%2E126%2E0_linux_amd64%2Etar%2Egz"
 
 [tools.glab."platforms.linux-x64-musl"]
-checksum = "sha256:63df684842b0697e418649dd64374d37ac1da0fbcdcb422d6a5557222f8bb40f"
-url = "https://gitlab.com/gitlab-org/cli/-/releases/v1.124.0/downloads/glab_1.124.0_linux_amd64.tar.gz"
-url_api = "https://gitlab.com/api/v4/projects/gitlab-org%2Fcli/packages/generic/glab/1%2E124%2E0/glab_1%2E124%2E0_linux_amd64%2Etar%2Egz"
+checksum = "sha256:f386519ba83e9482979992ee7f60eeebee4d95b950f95f4fe7289e0a1b1ea74c"
+url = "https://gitlab.com/gitlab-org/cli/-/releases/v1.126.0/downloads/glab_1.126.0_linux_amd64.tar.gz"
+url_api = "https://gitlab.com/api/v4/projects/gitlab-org%2Fcli/packages/generic/glab/1%2E126%2E0/glab_1%2E126%2E0_linux_amd64%2Etar%2Egz"
 
 [tools.glab."platforms.macos-arm64"]
-checksum = "sha256:04aad4d989d98cb030318e09359f02e0ba2637ede682ec0dee1f5974dedd44c1"
-url = "https://gitlab.com/gitlab-org/cli/-/releases/v1.124.0/downloads/glab_1.124.0_darwin_arm64.tar.gz"
-url_api = "https://gitlab.com/api/v4/projects/gitlab-org%2Fcli/packages/generic/glab/1%2E124%2E0/glab_1%2E124%2E0_darwin_arm64%2Etar%2Egz"
+checksum = "sha256:11980310aaad2bd9c4e75b5635a60e984da5d0e6245187f2cd6e8db0ec4c5a92"
+url = "https://gitlab.com/gitlab-org/cli/-/releases/v1.126.0/downloads/glab_1.126.0_darwin_arm64.tar.gz"
+url_api = "https://gitlab.com/api/v4/projects/gitlab-org%2Fcli/packages/generic/glab/1%2E126%2E0/glab_1%2E126%2E0_darwin_arm64%2Etar%2Egz"
 
 [tools.glab."platforms.macos-x64"]
-checksum = "sha256:6adb7155566bedd6272d8f286e6c75b080d0050a349de4bed79661226d10d954"
-url = "https://gitlab.com/gitlab-org/cli/-/releases/v1.124.0/downloads/glab_1.124.0_darwin_amd64.tar.gz"
-url_api = "https://gitlab.com/api/v4/projects/gitlab-org%2Fcli/packages/generic/glab/1%2E124%2E0/glab_1%2E124%2E0_darwin_amd64%2Etar%2Egz"
+checksum = "sha256:5fedae994da1ab57cd1384d1d26ee9acfe79abf5f04fdd2d3777f37d8cc58d30"
+url = "https://gitlab.com/gitlab-org/cli/-/releases/v1.126.0/downloads/glab_1.126.0_darwin_amd64.tar.gz"
+url_api = "https://gitlab.com/api/v4/projects/gitlab-org%2Fcli/packages/generic/glab/1%2E126%2E0/glab_1%2E126%2E0_darwin_amd64%2Etar%2Egz"
 
 [tools.glab."platforms.windows-x64"]
-checksum = "sha256:9b58b54cf841b43215ef01ba90793d8a845e81ddb7b3dfa2b5a238cde4b77b34"
-url = "https://gitlab.com/gitlab-org/cli/-/releases/v1.124.0/downloads/glab_1.124.0_windows_amd64.zip"
-url_api = "https://gitlab.com/api/v4/projects/gitlab-org%2Fcli/packages/generic/glab/1%2E124%2E0/glab_1%2E124%2E0_windows_amd64%2Ezip"
+checksum = "sha256:44640759caed89c5fd2278bbf5ad43e5da30fdd2030242e4bef81c32ef9984bf"
+url = "https://gitlab.com/gitlab-org/cli/-/releases/v1.126.0/downloads/glab_1.126.0_windows_amd64.zip"
+url_api = "https://gitlab.com/api/v4/projects/gitlab-org%2Fcli/packages/generic/glab/1%2E126%2E0/glab_1%2E126%2E0_windows_amd64%2Ezip"
 
 [[tools.jq]]
 version = "1.8.2"

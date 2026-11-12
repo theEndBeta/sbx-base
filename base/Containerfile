@@ -9,6 +9,14 @@ RUN --mount=type=cache,target=/var/cache/libdnf5 \
   dnf install -y fish git
 
 RUN --mount=type=cache,target=/var/cache/libdnf5 \
+  dnf install -y \
+  clang \
+  openssl \
+  openssl-devel \
+  zstd \
+  zip
+
+RUN --mount=type=cache,target=/var/cache/libdnf5 \
   dnf install -y procps-ng iproute
 
 

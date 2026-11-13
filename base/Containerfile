@@ -1,4 +1,22 @@
-FROM registry.fedoraproject.org/fedora-minimal:44
+FROM docker.io/rust:1.99 as sommelier
+
+WORKDIR /app
+
+RUN git clone --depth 1 --branch v0.2.0 https://github.com/google/sommelier-rs.git .
+
+RUN cargo build --release && ls
+
+
+FROM docker.io/debian:13-slim as kilo-desktop
+
+WORKDIR /app
+
+ADD https://autoupdate.desktop.anaconda.com/kilo-desktop/latest/latest/linux/x64/kilo-desktop.deb /app/kilo-desktop.deb
+
+RUN dpkg-deb -x kilo-desktop.deb kilo-desktop
+
+
+FROM registry.fedoraproject.org/fedora-minimal:45
 
 RUN useradd --create-home --shell /bin/fish --uid 1000 --user-group sbx
 
@@ -11,6 +29,13 @@ RUN --mount=type=cache,target=/var/cache/libdnf5 \
 RUN --mount=type=cache,target=/var/cache/libdnf5 \
   dnf install -y \
   clang \
+  nspr-devel \
+  nss-devel \
+  atk-devel \
+  at-spi2-atk-devel \
+  cups-devel \
+  cairo-devel \
+  gtk3-devel \
   openssl \
   openssl-devel \
   zstd \
@@ -19,6 +44,12 @@ RUN --mount=type=cache,target=/var/cache/libdnf5 \
 RUN --mount=type=cache,target=/var/cache/libdnf5 \
   dnf install -y procps-ng iproute
 
+COPY --link --chmod=755 --from=sommelier /app/target/release/sommelier /usr/local/bin/sommelier
 
-ENTRYPOINT []
+COPY --link --from=kilo-desktop /app/kilo-desktop /
+
+# XDG_RUNTIME_DIR=/run sommelier wayland-0
+# export DISPLAY=/run/wayland-0
+
+ENTRYPOINT ["/sbin/init"]
 CMD ["/bin/fish"]

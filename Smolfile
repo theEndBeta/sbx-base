@@ -1,0 +1,13 @@
+image = "10.20.1.14:5000/sandbox-base:v0.0.1"
+net = true
+gpu = true
+net_backend = "virtio-net"
+entrypoint = ["/sbin/init"]
+cmd = []
+
+[network]
+# guest_subnet = "10.200.0.0/30"
+# block_private = false
+# allow_private = ["127.0.0.1/32", '::1/64']
+
+# vim: set ft=toml:

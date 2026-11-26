@@ -4,13 +4,19 @@ lockfile = true
 experimental = true
 
 [vars]
-tag_base = "localhost:5000/sandbox-base:v0.0.1"
-tag = "localhost:5000/sandbox:v0.0.1"
+ver = "v0.0.2"
+registry = "forge.larkspur.casa/theendbeta"
+image_name = "sandbox"
+tag = "{{ vars.registry }}/{{ vars.image_name }}:{{ vars.ver }}"
+
+base_registry = "{{ vars.registry }}"
+base_image_name = "{{ vars.image_name }}-base"
+base_tag = "{{ vars.base_registry }}/{{ vars.base_image_name }}:{{ vars.ver }}"
+
 oci_dir = "mise-oci"
 sbx_name = "sbx-sandbox"
 
 [oci]
-from = "localhost:5000/sandbox-base:v0.0.1"
 tag = "{{ vars.tag }}"
 user = "1000:1000"
 user_id = 1000
@@ -33,20 +39,24 @@ neovim = "latest"
 [tools."github:superradcompany/microsandbox"]
 version = "0.8"
 
+[tasks.registry-login]
+description = "Log into registry {{ vars.registry }}"
+run = "podman login {{ vars.registry }}"
+
 [tasks.base-build]
-description = "Build the base image for the sandbox - {{ vars.tag_base }}"
-run = "podman build -f ./base/Containerfile -t {{ vars.tag_base }}"
-sources = ["base/Containerfile"]
+description = "Build the base image for the sandbox - {{ vars.base_tag }}"
+run = "podman build -f ./base/Containerfile -t {{ vars.base_tag }}"
+sources = ["base/**"]
 
 [tasks.base-push]
-description = "Push the base image for the sandbox - {{ vars.tag_base }}"
+description = "Push the base image for the sandbox - {{ vars.base_tag }}"
 depends = ["base-build"]
-run = "podman push {{ vars.tag_base }}"
+run = "podman push {{ vars.base_tag }}"
 
 [tasks.sbx-build]
 description = "Build the tooled sandbox image - {{ vars.tag }}"
 outputs = ["{{ vars.oci_dir }}"]
-run = "mise oci build"
+run = "mise oci build --from {{ vars.base_tag }}"
 wait_for = ["base-build", "base-push"]
 
 [tasks.sbx-load]
@@ -60,7 +70,7 @@ depends = ["sbx-build"]
 run = "mise oci run --image-dir {{ vars.oci_dir }}/ -it -- /bin/fish"
 
 [tasks.sbx-push]
-description = "Push the tooled sandbox image - {{ vars.tag_base }}"
+description = "Push the tooled sandbox image - {{ vars.tag }}"
 depends = ["sbx-build"]
 run = "mise oci push --image-dir {{ vars.oci_dir }}/ {{ vars.tag }}"
 

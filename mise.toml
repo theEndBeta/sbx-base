@@ -31,7 +31,7 @@ neovim = "latest"
 "github:Kilo-Org/kilocode" = "7.8"
 
 [tools."github:superradcompany/microsandbox"]
-version = "0.7"
+version = "0.8"
 
 [tasks.base-build]
 description = "Build the base image for the sandbox - {{ vars.tag_base }}"
